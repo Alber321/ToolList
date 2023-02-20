@@ -4,7 +4,7 @@ urlsToCache = [
     './',
     './regist_serviceWorker.js',
     './index.html',
-    './css/style.css',
+    './style.css',
     './app.js',
     './image/image192.png',
     './image/image256.png',

@@ -1,3 +1,6 @@
+//PWA offline
+navigator.serviceWorker.register('./ServiceWorker.js');
+
 // Varaibles
 const formulario = document.querySelector("#formulario");
 const titulo = document.querySelector("#titulo");
@@ -45,7 +48,7 @@ function Validar(ev) {
 function Mostrar() {
 
     task. innerHTML = "";
-    if(tareas.length < 1 ){
+    if(tareas.length <= 0 ){
         const mensaje = document.createElement("h5");
         mensaje.textContent = "-Sin Tareas-"
         return;
@@ -69,10 +72,10 @@ function Mostrar() {
   })
   // Mostrar Dato de total y completadas
 
-  const TotalTareas = tareas.length;
-  total.textContent = `Total Tareas: ${TotalTareas}`;
-  const TotalCompletadas = tareas.filter(item => item.estado === true).length;
-  comp.textContent = `Completadas: ${TotalCompletadas}`;
+  // const TotalTareas = tareas.length;
+  // total.textContent = `Total Tareas: ${TotalTareas}`;
+  // const TotalCompletadas = tareas.filter(item => item.estado === true).length;
+  // comp.textContent = `Completadas: ${TotalCompletadas}`;
 
    //persistir los datos con localStorage
    localStorage.setItem("task", JSON.stringify(tareas))

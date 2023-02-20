@@ -14,15 +14,15 @@
     <link rel="apple-touch-icon" href="./image/image256.png"/>
     <link rel="apple-touch-icon" href="./image/image512.png"/>
     <link rel="apple-touch-icon" href="./image/image640.png"/>
-    <script src="./app.js" defer></script>
-    <script src="./regist_serviceWorker.js"></script>
+    
+    
 </head>
 <body>
     <h1>Lista de Tareas</h1>
-    <div class="datos">
+    <!-- <div class="datos">
         <p id="total">Total Tareas: 0</p>
         <p id="comp">Completadas: 0</p>
-    </div>
+    </div> -->
         <!-- Principal -->
         <div class="contenedor">
             <form id="formulario" class="formulario">
@@ -30,9 +30,11 @@
                 <input type="text" id="tarea" placeholder="Nueva Tarea">
                 <input type="submit" value="Agregar">
             </form>
-                <div class="tareas">
-                   <h5>-Sin Tareas-</h5>
-                </div>
+            <div class="tareas">
+                <h5>-Sin Tareas-</h5>
+             </div>
         </div>
+        <script src="./regist_serviceWorker.js"></script>
+        <script src="./app.js" defer></script>
 </body>
 </html>
