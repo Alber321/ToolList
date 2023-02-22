@@ -1,20 +1,21 @@
 //PWA offline
 navigator.serviceWorker.register('./ServiceWorker.js');
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCAi8GpdDRLeKydYwUht-jQjSiscv-R-rQ",
-//   authDomain: "pwaa-5c38e.firebaseapp.com",
-//   projectId: "pwaa-5c38e",
-//   storageBucket: "pwaa-5c38e.appspot.com",
-//   messagingSenderId: "394769300175",
-//   appId: "1:394769300175:web:dc4cda25a08a84536855ba",
-//   measurementId: "G-FDW99XW073"
-// };
+const firebaseConfig = {
+   apiKey: "AIzaSyCAi8GpdDRLeKydYwUht-jQjSiscv-R-rQ",
+   authDomain: "pwaa-5c38e.firebaseapp.com",
+   projectId: "pwaa-5c38e",
+   storageBucket: "pwaa-5c38e.appspot.com",
+  messagingSenderId: "394769300175",
+   appId: "1:394769300175:web:dc4cda25a08a84536855ba",
+   measurementId: "G-FDW99XW073"
+ };
 
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);  
+// Initialize Firebase
+ 
+const app = initializeApp(firebaseConfig);  
 
-// const db = firebase.firestore();
+ const db = firebase.firestore();
 
 // Varaibles
 const formulario = document.querySelector("#formulario");
@@ -46,12 +47,23 @@ function Validar(e) {
     return
   }
   // Crear Objeto
-  const objtTarea = {
+  
+  let objtTarea = input.value;
+  db.collection("Usuario").add({
+
     id: Date.now(),
     tarea: tarea,
     estado: false,
-  }
-  
+    Fecha: firebase.firestore.Timestamp.fromDate(new Date())
+  })
+
+  .then((docRef) => {
+    console.log("Tarea agregada con exito a DB con ID: ", docRef.id);
+  })
+  .catch((error) => {
+    console.error("Error: ", error);
+  });
+
   task = [...task, objtTarea];
   formulario.reset();
 
