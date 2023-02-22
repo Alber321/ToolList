@@ -1,84 +1,102 @@
 //PWA offline
 navigator.serviceWorker.register('./ServiceWorker.js');
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCAi8GpdDRLeKydYwUht-jQjSiscv-R-rQ",
+//   authDomain: "pwaa-5c38e.firebaseapp.com",
+//   projectId: "pwaa-5c38e",
+//   storageBucket: "pwaa-5c38e.appspot.com",
+//   messagingSenderId: "394769300175",
+//   appId: "1:394769300175:web:dc4cda25a08a84536855ba",
+//   measurementId: "G-FDW99XW073"
+// };
+
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);  
+
+// const db = firebase.firestore();
+
 // Varaibles
 const formulario = document.querySelector("#formulario");
-const titulo = document.querySelector("#titulo");
-const task = document.querySelector(".tareas");
+const tareas = document.querySelector("#tareas");
 const total = document.querySelector("#total");
-const comp = document.querySelector("#comp");
-let tareas = [];
+const completadas = document.querySelector("#completadas");
+let task = [];
 
 // Eventos
 (() => {
   formulario.addEventListener("submit", Validar);
-  task.addEventListener("click", Eliminar);
-  task.addEventListener("click", Completar);
+  tareas.addEventListener("click", Eliminar);
+  tareas.addEventListener("click", Completar);
 
   document.addEventListener("DOMContentLoaded", () => {
-    let datosLS = JSON.parse(localStorage.getItem("task")) || [];
-    tareas = datosLS;
+    let datosLS = JSON.parse(localStorage.getItem("tareas")) || [];
+    task = datosLS;
     Mostrar();
 })
 })();
 
 // Funciones
-function Validar(ev) {
-  ev.preventDefault();
+function Validar(e) {
+  e.preventDefault();
   // Validar
   const tarea = document.querySelector("#tarea").value;
-  if (!tarea.trim()) {
-    titulo.textContent = "Formulario Vacio";
-    setTimeout(() => {
-      titulo.textContent = "Formulario";
-    }, 1000);
-    return;
+  if(tarea.trim().length === 0){
+    console.log("vacio");
+    return
   }
   // Crear Objeto
   const objtTarea = {
     id: Date.now(),
     tarea: tarea,
     estado: false,
-  };
-  tareas = [...tareas, objtTarea];
+  }
+  
+  task = [...task, objtTarea];
   formulario.reset();
+
+  //Agregar HTML
   Mostrar();
 }
 
 function Mostrar() {
 
-    task. innerHTML = "";
-    if(tareas.length <= 0 ){
-        const mensaje = document.createElement("h5");
-        mensaje.textContent = "-Sin Tareas-"
-        return;
-    }
-
-  tareas.forEach((item) => {
-    const itemTarea = document.createElement("div");
-    itemTarea.classList.add("item-tarea");
+  while(tareas.firstChild){
+    tareas.removeChild(tareas.firstChild)
+  }
+  if(task.length > 0){
+  task.forEach(item => {
+    const itemTarea = document.createElement('div');
+    itemTarea.classList.add('item-tarea');
     itemTarea.innerHTML = `
-    ${item.estado ? (
-      `<p class="completa"> ${item.tarea} </p>`
+    <p>${item.estado ? (
+      `<span class='completa'> ${item.tarea} </span>`
     ) : (
-      `<p> ${item.tarea} </p>`
-    ) }
+      `<span> ${item.tarea} </span>`
+    )}</p>
 
     <div class="botones">
-        <button data-id="${item.id}" class="eliminar">X</button>
-        <button data-id="${item.id}"class="completada">✔</button>
-    </div>`
-    task.appendChild(itemTarea)
-  })
+        <button class="eliminar" data-id="${item.id}" >X</button>
+        <button class="completada" data-id="${item.id}">✔</button>
+    </div>
+    `
+    tareas.appendChild(itemTarea)
+  });
+}else{
+  const mensaje = document.createElement("h5");
+        mensaje.textContent = "~SIN TAREAS~"
+        tareas.appendChild(mensaje)
+}
   // Mostrar Dato de total y completadas
 
-  // const TotalTareas = tareas.length;
-  // total.textContent = `Total Tareas: ${TotalTareas}`;
-  // const TotalCompletadas = tareas.filter(item => item.estado === true).length;
-  // comp.textContent = `Completadas: ${TotalCompletadas}`;
+  let totalTareas = task.length;
+  let totalCompletas = task.filter(item => item.estado === true).length;
+
+  total.textContent = `Total Tareas: ${totalTareas}`;
+  completadas.textContent = `Completadas: ${totalCompletas}`;
 
    //persistir los datos con localStorage
-   localStorage.setItem("task", JSON.stringify(tareas))
+   localStorage.setItem("tareas", JSON.stringify(task))
 
 }
 
@@ -86,8 +104,8 @@ function Eliminar(e){
     if(e.target.classList.contains("eliminar")) {
         const IdTarea = Number(e.target.getAttribute("data-id"));
         // Eliminar Tarea
-        const NewTask = tareas.filter( (item) => item.id !== IdTarea);
-        tareas = NewTask;
+        const NewTask = task.filter( (item) => item.id !== IdTarea);
+        task = NewTask;
         Mostrar();
     }
 }
@@ -97,7 +115,7 @@ function Eliminar(e){
     if(e.target.classList.contains("completada")) {
         const IdTarea = Number(e.target.getAttribute("data-id"));
         // Completar
-        const NewTask = tareas.map( (item) => {
+        const NewTask = task.map( item => {
           if( item.id === IdTarea){
             item.estado = !item.estado;
             return item;
@@ -105,7 +123,7 @@ function Eliminar(e){
             return item;
           }
         })
-        tareas = NewTask;
+        task = NewTask;
         Mostrar();
     }
   }

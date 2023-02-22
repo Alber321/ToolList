@@ -1,40 +1,54 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#e9e8e8"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e9e8e8" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="shortcut icon" type="image/png" href="./image/image192.png" />
+    <link rel="apple-touch-icon" href="./image/image192.png" />
+    <link rel="apple-touch-startup-image" href="./image/image192.png" />
+    <link rel="apple-touch-icon" href="./image/image192.png" />
+    <link rel="apple-touch-icon" href="./image/image256.png" />
+    <link rel="apple-touch-icon" href="./image/image512.png" />
+    <link rel="apple-touch-icon" href="./image/image640.png" />
+    <link rel="stylesheet" href="style.css"/>
     <title>Lista de Tareas</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="shortcut icon" type="image/png" href="./image/image192.png">
-    <link rel="apple-touch-icon" href="./image/image192.png">
-    <link rel="apple-touch-startup-image" href="./image/image192.png">
-    <link rel="apple-touch-icon" href="./image/image192.png"/>
-    <link rel="apple-touch-icon" href="./image/image256.png"/>
-    <link rel="apple-touch-icon" href="./image/image512.png"/>
-    <link rel="apple-touch-icon" href="./image/image640.png"/>
-    
-    
-</head>
-<body>
+  </head>
+  <body>
     <h1>Lista de Tareas</h1>
-    <!-- <div class="datos">
-        <p id="total">Total Tareas: 0</p>
-        <p id="comp">Completadas: 0</p>
-    </div> -->
-        <!-- Principal -->
-        <div class="contenedor">
-            <form id="formulario" class="formulario">
-                <h4 id="titulo">Formulario</h4>
-                <input type="text" id="tarea" placeholder="Nueva Tarea">
-                <input type="submit" value="Agregar">
-            </form>
-            <div class="tareas">
-                <h5>-Sin Tareas-</h5>
-             </div>
+
+    <div class="datos">
+        <p id="total">Total tareas: 0</p>
+        <p id="completadas">Completadas: 0</p>
+    </div>
+
+    <!-- Principal -->
+    <div class="contenedor">
+      <form id="formulario" class="formulario">
+        <h4>Formulario</h4>
+        <input type="text" id="tarea" placeholder="Nueva Tarea" />
+        <input type="submit" value="Agregar" />
+      </form>
+
+      <div class="tareas" id="tareas">
+
+        <div class="item-tarea">
+          <p>Tarea 1</p>
+          <div class="botones">
+            <button class="eliminar" data-id="${item.id}">X</button>
+            <button class="completada" data-id="${item.id}">✔</button>
+          </div>
         </div>
-        <script src="./regist_serviceWorker.js"></script>
-        <script src="./app.js" defer></script>
-</body>
+
+      </div>
+
+    </div>
+
+
+    <script src="./regist_serviceWorker.js"></script>
+    <script src="./app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  </body>
 </html>
